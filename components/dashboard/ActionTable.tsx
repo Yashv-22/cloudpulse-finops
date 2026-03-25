@@ -5,7 +5,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
-export function ActionTable({ issues, compact = false }: { issues: any[], compact?: boolean }) {
+import { useGlobalState } from "@/components/global-state"
+
+export function ActionTable({ issues, errors, compact = false }: { issues: any[], errors?: any[], compact?: boolean }) {
+  const { currency, exchangeRate } = useGlobalState()
+  const symbol = currency === "USD" ? "$" : "₹"
+  const multiplier = currency === "USD" ? 1 / exchangeRate : 1
   if (issues.length === 0) {
     return (
       <Card className="h-full">
@@ -26,7 +31,17 @@ export function ActionTable({ issues, compact = false }: { issues: any[], compac
         <CardTitle>Recent Opportunities</CardTitle>
         <CardDescription>Top resources to optimize.</CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow overflow-auto">
+      <CardContent className="flex-grow overflow-auto p-6">
+        {errors && errors.length > 0 && (
+          <div className="flex gap-2 mb-4 flex-wrap pb-4 border-b">
+            <span className="text-sm font-medium text-destructive flex items-center">Alert:</span>
+            {errors.map((err, i) => (
+              <Badge key={i} variant="destructive" className="bg-destructive/10 text-destructive border-destructive/30 hover:bg-destructive/20">
+                {err.service}: Missing Permissions
+              </Badge>
+            ))}
+          </div>
+        )}
         <Table>
           <TableHeader>
             <TableRow>
@@ -47,7 +62,7 @@ export function ActionTable({ issues, compact = false }: { issues: any[], compac
                 <TableCell>
                   <Badge variant="outline" className="font-normal text-xs">{issue.type}</Badge>
                 </TableCell>
-                <TableCell className="text-right">₹{issue.monthlyLeakage.toLocaleString('en-IN')}</TableCell>
+                <TableCell className="text-right">{symbol}{Math.round(issue.monthlyLeakage * multiplier).toLocaleString('en-US')}</TableCell>
                 {!compact && (
                   <TableCell className="text-right">
                     <Button variant="outline" size="sm">Fix</Button>

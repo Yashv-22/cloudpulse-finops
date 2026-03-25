@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, IndianRupee, ShieldCheck, Activity } from "lucide-react";
+import { AlertCircle, IndianRupee, DollarSign, ShieldCheck, Activity } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useGlobalState } from "@/components/global-state";
@@ -12,8 +12,8 @@ interface KPICardsProps {
 }
 
 export function KPICards({ totalWaste, score, activeCount }: KPICardsProps) {
-  const { currency } = useGlobalState();
-  const displayWaste = currency === "USD" ? totalWaste / 83 : totalWaste; // Rough conversion for demo
+  const { currency, exchangeRate } = useGlobalState();
+  const displayWaste = currency === "USD" ? totalWaste / exchangeRate : totalWaste; // Live API conversion
   const currencySymbol = currency === "USD" ? "$" : "₹";
 
   const getGrade = (s: number) => {
@@ -32,7 +32,7 @@ export function KPICards({ totalWaste, score, activeCount }: KPICardsProps) {
       <Card className="hover:border-primary/50 transition-colors duration-300">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium">Monthly Savings Potential</CardTitle>
-          <IndianRupee className="h-4 w-4 text-muted-foreground" />
+          {currency === "USD" ? <DollarSign className="h-4 w-4 text-muted-foreground" /> : <IndianRupee className="h-4 w-4 text-muted-foreground" />}
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold tracking-tight text-emerald-500">

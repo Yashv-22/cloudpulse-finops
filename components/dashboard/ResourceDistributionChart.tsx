@@ -5,8 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { useGlobalState } from "@/components/global-state";
 
 export function ResourceDistributionChart({ issues }: { issues: any[] }) {
-  const { currency } = useGlobalState();
-  const conversionRate = currency === "USD" ? 1 / 83 : 1;
+  const { currency, exchangeRate } = useGlobalState();
+  const conversionRate = currency === "USD" ? 1 / exchangeRate : 1;
   const symbol = currency === "USD" ? "$" : "₹";
 
   // Aggregate waste by resource type (Compute vs Storage vs Network)

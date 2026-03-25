@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { ShieldAlert, Cloud, PlayCircle } from "lucide-react";
+import { ShieldAlert, Cloud, PlayCircle, ShieldCheck, DatabaseZap, Lock } from "lucide-react";
 import { USE_DEMO_MODE } from "@/lib/config";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -124,6 +124,33 @@ export default function LoginPage() {
           </Dialog>
         </CardFooter>
       </Card>
+
+      {/* Security & Trust Features */}
+      <div className="w-full max-w-md mt-6 grid grid-cols-1 gap-4 z-10 pb-12">
+        <div className="bg-card/40 backdrop-blur-md border border-border p-5 rounded-2xl shadow-lg flex items-start gap-4 hover:bg-card/60 transition-colors">
+          <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-500 mt-1 shrink-0">
+            <Lock className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-foreground">Zero-Knowledge Architecture</h4>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+              Your credentials never touch a database. All processing happens entirely in-memory and is discarded the moment your session ends.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-card/40 backdrop-blur-md border border-border p-5 rounded-2xl shadow-lg flex items-start gap-4 hover:bg-card/60 transition-colors">
+          <div className="p-2 bg-blue-500/10 rounded-lg text-blue-500 mt-1 shrink-0">
+            <ShieldCheck className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-foreground">Strictly Read-Only</h4>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+              We exclusively request <code className="text-[10px] bg-background px-1 py-0.5 rounded border">ReadOnlyAccess</code>. CloudPulse mathematically cannot mutate, delete, or alter any of your AWS infrastructure.
+            </p>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

@@ -19,15 +19,15 @@ export default function ComputePage() {
   const [isFixModalOpen, setIsFixModalOpen] = useState(false)
   const [actionLoading, setActionLoading] = useState(false)
   
-  const { currency } = useGlobalState()
+  const { currency, exchangeRate } = useGlobalState()
   const symbol = currency === "USD" ? "$" : "₹"
-  const multiplier = currency === "USD" ? 1 / 83 : 1
+  const multiplier = currency === "USD" ? 1 / exchangeRate : 1
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await getIdleEC2Instances()
-        if (res.error) setError(res.error)
+        const res: any = await getIdleEC2Instances()
+        if (res.error) setError(typeof res.error === 'string' ? res.error : res.error.message)
         if (res.data) setData(res.data)
       } catch (err: any) {
         setError(err.message || "Failed to load compute data")
@@ -61,13 +61,14 @@ export default function ComputePage() {
         <p className="text-muted-foreground mt-1">Review and optimize your EC2 instances.</p>
       </div>
 
-      {error && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="bg-destructive/10 border-destructive/20 text-destructive">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error Loading Data</AlertTitle>
+          <AlertTitle className="flex items-center gap-2">
+            Permissions Required
+            <Badge variant="destructive">Error</Badge>
+          </AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
-      )}
 
       {/* Graviton Comparison Card */}
       <Card className="bg-gradient-to-r from-primary/10 to-transparent border-primary/20">

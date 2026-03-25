@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/theme-provider";
 import { Search, Sun, Moon, LogOut, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/actions/auth";
@@ -11,7 +11,7 @@ import Link from "next/link";
 export function Header() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
-  const { currency, setCurrency, demoMode, setDemoMode } = useGlobalState();
+  const { currency, setCurrency, demoMode, setDemoMode, lastScanned, totalScanned } = useGlobalState();
 
   useEffect(() => setMounted(true), []);
 
@@ -25,6 +25,16 @@ export function Header() {
             <span className="text-xs">⌘</span>K
           </kbd>
         </Button>
+        {mounted && lastScanned && (
+          <div className="hidden lg:flex items-center gap-4 text-xs">
+            <div className="bg-primary/10 text-primary px-3 py-1.5 rounded-full border border-primary/20 font-medium">
+              Analyzed {totalScanned.toLocaleString()} resources
+            </div>
+            <div className="text-muted-foreground">
+              Last Scanned: {lastScanned.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </div>
+          </div>
+        )}
       </div>
       
       <div className="flex items-center gap-2">

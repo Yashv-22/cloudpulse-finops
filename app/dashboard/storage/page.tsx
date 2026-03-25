@@ -9,7 +9,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { RemediationDialog } from "@/components/dashboard/RemediationDialog"
-import { useGlobalState } from "@/components/global-state"
+import { useGlobalState, CustomStorageItem } from "@/components/global-state"
+import { CustomStorageDialog } from "@/components/dashboard/CustomStorageDialog"
 
 export default function StoragePage() {
   const [data, setData] = useState<any[]>([])
@@ -18,16 +19,18 @@ export default function StoragePage() {
   const [selectedItem, setSelectedItem] = useState<any | null>(null)
   const [isFixModalOpen, setIsFixModalOpen] = useState(false)
   const [actionLoading, setActionLoading] = useState(false)
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [selectedCustomItem, setSelectedCustomItem] = useState<CustomStorageItem | null>(null)
   
-  const { currency } = useGlobalState()
+  const { currency, exchangeRate, customStorage, removeCustomStorage } = useGlobalState()
   const symbol = currency === "USD" ? "$" : "₹"
-  const multiplier = currency === "USD" ? 1 / 83 : 1
+  const multiplier = currency === "USD" ? 1 / exchangeRate : 1
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await getStorageOpportunities()
-        if (res.errors && res.errors.length > 0) setErrors(res.errors)
+        const res: any = await getStorageOpportunities()
+        if (res.errors && res.errors.length > 0) setErrors(res.errors.filter(Boolean).map((e: any) => typeof e === 'string' ? e : e.message))
         if (res.data) setData(res.data)
       } catch (err: any) {
         setErrors([err.message || "Failed to load storage data"])
@@ -52,9 +55,24 @@ export default function StoragePage() {
     setSelectedItem(null)
   }
 
+  const handleEditCustom = (item: CustomStorageItem) => {
+    setSelectedCustomItem(item)
+    setIsAddDialogOpen(true)
+  }
+
+  const handleAddCustom = () => {
+    setSelectedCustomItem(null)
+    setIsAddDialogOpen(true)
+  }
+
+  const allData = [...data, ...customStorage.map(c => ({
+    ...c,
+    isCustom: true
+  }))]
+
   // Derived mock data or filtered data for GP2 modernization
   // For demo, we just simulate any EBS volume as gp2 if not explicitly stated, or just list 1 if none.
-  const gp2Volumes = data.filter(d => typeof d.type === 'string' && d.type.includes('EBS')).map(vol => ({
+  const gp2Volumes = allData.filter(d => typeof d.type === 'string' && d.type.includes('EBS')).map(vol => ({
     ...vol,
     gp3Savings: Math.round(vol.size * 1.6) // Mock savings calculation for moving from gp2 to gp3 (e.g. 20% cheaper)
   }))
@@ -87,15 +105,21 @@ export default function StoragePage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Storage Optimization</h1>
-        <p className="text-muted-foreground mt-1">Review unattached volumes and modernize legacy storage.</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Storage Optimization</h1>
+          <p className="text-muted-foreground mt-1">Review unattached volumes and modernize legacy storage.</p>
+        </div>
+        <Button onClick={handleAddCustom}>Add Custom Storage</Button>
       </div>
 
       {errors.length > 0 && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="bg-destructive/10 border-destructive/20 text-destructive">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Errors Loading Data</AlertTitle>
+          <AlertTitle className="flex items-center gap-2">
+            Permissions Required
+            <Badge variant="destructive">Error</Badge>
+          </AlertTitle>
           <AlertDescription>
             <ul className="list-disc pl-5 mt-1">
               {errors.map((e, i) => <li key={i}>{typeof e === 'string' ? e : "Unknown error"}</li>)}
@@ -162,7 +186,7 @@ export default function StoragePage() {
             <div className="flex h-48 items-center justify-center">
               <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             </div>
-          ) : data.length === 0 ? (
+          ) : allData.length === 0 ? (
             <div className="flex h-48 items-center justify-center text-muted-foreground flex-col gap-2">
               <HardDrive className="w-16 h-16 opacity-30 mx-auto mb-2" />
               <span>No storage optimizations found. Excellent!</span>
@@ -180,19 +204,20 @@ export default function StoragePage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.map((item, idx) => (
+                {allData.map((item, idx) => (
                   <TableRow key={`${item.id}-${idx}`}>
                     <TableCell className="font-medium text-sm">
-                      <div className="truncate max-w-[250px]" title={item.id}>{item.id}</div>
+                      <div className="truncate max-w-[250px]" title={item.id}>{item.name || item.id}</div>
                     </TableCell>
                     <TableCell>
                       <Badge variant={item.type.includes("EBS") ? "default" : "secondary"}>
                         {item.type}
                       </Badge>
+                      {item.isCustom && <Badge variant="outline" className="ml-2 border-primary/50 text-xs">Custom</Badge>}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline" className={item.type.includes("EBS") ? "text-amber-500 border-amber-500/50" : "text-blue-500 border-blue-500/50"}>
-                        {item.type.includes("EBS") ? "Unattached" : "Standard Tier"}
+                        {item.status || (item.type.includes("EBS") ? "Unattached" : "Standard Tier")}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-muted-foreground">
@@ -202,9 +227,16 @@ export default function StoragePage() {
                       {symbol}{Math.round(item.monthlyLeakage * multiplier).toLocaleString('en-US')}
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="outline" size="sm" onClick={() => handleFixClick(item)}>
-                        View Fix
-                      </Button>
+                      {item.isCustom ? (
+                        <div className="flex justify-end gap-2">
+                          <Button variant="outline" size="sm" onClick={() => handleEditCustom(item as any)}>Edit</Button>
+                          <Button variant="outline" size="sm" onClick={() => removeCustomStorage(item.id)} className="text-rose-500 hover:bg-rose-500/10">Remove</Button>
+                        </div>
+                      ) : (
+                        <Button variant="outline" size="sm" onClick={() => handleFixClick(item)}>
+                          View Fix
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -226,6 +258,14 @@ export default function StoragePage() {
           actionLabel={modProps.actionLabel}
           onAction={handleAction}
           actionLoading={actionLoading}
+        />
+      )}
+
+      {isAddDialogOpen && (
+        <CustomStorageDialog
+          isOpen={isAddDialogOpen}
+          onClose={() => setIsAddDialogOpen(false)}
+          existingItem={selectedCustomItem}
         />
       )}
     </div>

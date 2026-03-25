@@ -5,8 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { useGlobalState } from "@/components/global-state";
 
 export function MainChart({ totalWaste }: { totalWaste: number }) {
-  const { currency } = useGlobalState();
-  const conversionRate = currency === "USD" ? 1 / 83 : 1;
+  const { currency, exchangeRate } = useGlobalState();
+  const conversionRate = currency === "USD" ? 1 / exchangeRate : 1;
   const symbol = currency === "USD" ? "$" : "₹";
 
   const data = Array.from({ length: 12 }).map((_, i) => {
@@ -33,8 +33,8 @@ export function MainChart({ totalWaste }: { totalWaste: number }) {
       </CardHeader>
       <CardContent className="pl-0 flex-grow min-h-[300px]">
         {totalWaste > 0 ? (
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 20, right: 30, bottom: 0, left: 10 }}>
+          <ResponsiveContainer width="100%" height={300} minHeight={300}>
+            <AreaChart data={data} margin={{ top: 20, right: 30, bottom: 0, left: 25 }}>
               <defs>
                 <linearGradient id="colorProjected" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
@@ -58,6 +58,7 @@ export function MainChart({ totalWaste }: { totalWaste: number }) {
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
+                width={65}
                 tickFormatter={(value) => `${symbol}${value >= 1000 ? (value / 1000).toFixed(1) + 'k' : value}`}
               />
               <Tooltip 

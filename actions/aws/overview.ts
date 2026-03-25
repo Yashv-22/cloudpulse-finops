@@ -3,13 +3,15 @@
 import { getIdleEC2Instances } from "./compute";
 import { getUnusedEIPs } from "./network";
 import { getStorageOpportunities } from "./storage";
+import { getSecurityOpportunities } from "./security";
 import { cookies } from "next/headers";
 
 export async function getAggregatedInsights() {
-  const [compute, network, storage] = await Promise.all([
+  const [compute, network, storage, security] = await Promise.all([
     getIdleEC2Instances(),
     getUnusedEIPs(),
     getStorageOpportunities(),
+    getSecurityOpportunities(),
   ]);
 
   const cookieStore = await cookies();
@@ -23,6 +25,7 @@ export async function getAggregatedInsights() {
     ...(compute.data || []),
     ...(network.data || []),
     ...(storage.data || []),
+    ...(security.data || []),
   ];
 
   let totalWaste = 0;
@@ -38,6 +41,6 @@ export async function getAggregatedInsights() {
     optimizationScore,
     issuesCount: allItems.length,
     issues: allItems,
-    errors: [compute.error, network.error, ...(storage.errors || [])].filter(Boolean)
+    errors: [compute.error, network.error, ...(storage.errors || []), ...(security.errors || [])].filter(Boolean)
   };
 }
