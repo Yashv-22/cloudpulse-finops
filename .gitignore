@@ -1,0 +1,13 @@
+node_modules/
+.cache/
+__pycache__/
+*.pyc
+.env
+*.env
+dist/
+build/
+*.pack
+*.log
+.DS_Store
+auth_testing.md
+backend_test.py
