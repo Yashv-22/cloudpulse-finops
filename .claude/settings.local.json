@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python *)",
+      "Bash(npx next *)",
+      "Bash(venv/Scripts/pip install *)",
+      "Bash(venv/Scripts/python -c \"from app.main import app; print\\('Backend OK'\\)\")",
+      "Bash(venv/Scripts/uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload)",
+      "Bash(npm run *)",
+      "Bash(curl *)"
+    ]
+  }
+}

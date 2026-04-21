@@ -1,0 +1,37 @@
+node_modules/
+.cache/
+__pycache__/
+*.pyc
+.env
+*.env
+dist/
+build/
+*.pack
+*.log
+.DS_Store
+auth_testing.md
+backend_test.py
+-e 
+# Environment and credential files
+.env
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
+.credentials
+-e 
+# Environment and credential files
+.env
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
+.credentials
+
+backend/cloudpulse.db
+backend/venv/
+.venv/
+venv/
+*.db

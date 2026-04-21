@@ -1,0 +1,28 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:Describe*",
+        "rds:Describe*",
+        "elasticloadbalancing:Describe*",
+        "ce:GetCostAndUsage",
+        "cloudwatch:GetMetricStatistics"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Deny",
+      "Action": [
+        "ec2:Delete*",
+        "ec2:Modify*",
+        "rds:Delete*",
+        "rds:Modify*",
+        "elasticloadbalancing:Delete*",
+        "elasticloadbalancing:Modify*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

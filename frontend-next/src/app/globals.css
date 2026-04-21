@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg-base: #09090B;
+  --bg-panel: #18181B;
+  --bg-surface: rgba(24, 24, 27, 0.5);
+  --bg-elevated: rgba(0, 0, 0, 0.4);
+  --bg-input: rgba(24, 24, 27, 0.8);
+  --bg-hover: rgba(39, 39, 42, 0.5);
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+  --text-inverted: #09090B;
+
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-subtle: #27272A;
+  --border-strong: #3F3F46;
+
+  --brand: #007AFF;
+  --brand-hover: #005BB5;
+  --brand-muted: rgba(0, 122, 255, 0.1);
+  --brand-border: rgba(0, 122, 255, 0.2);
+
+  --chart-bg: #18181B;
+  --chart-border: #27272A;
+
+  --scrollbar-thumb: #27272A;
+
+  --badge-critical-bg: rgba(69, 10, 10, 0.5);
+  --badge-critical-text: #EF4444;
+  --badge-critical-border: rgba(239, 68, 68, 0.3);
+  --badge-high-bg: rgba(67, 20, 7, 0.5);
+  --badge-high-text: #F97316;
+  --badge-high-border: rgba(249, 115, 22, 0.3);
+  --badge-medium-bg: rgba(66, 32, 6, 0.5);
+  --badge-medium-text: #EAB308;
+  --badge-medium-border: rgba(234, 179, 8, 0.3);
+  --badge-low-bg: rgba(5, 46, 22, 0.5);
+  --badge-low-text: #22C55E;
+  --badge-low-border: rgba(34, 197, 94, 0.3);
+}
+
+:root.light-mode {
+  --bg-base: #F8F9FB;
+  --bg-panel: #FFFFFF;
+  --bg-surface: rgba(255, 255, 255, 0.8);
+  --bg-elevated: rgba(255, 255, 255, 0.9);
+  --bg-input: #F1F5F9;
+  --bg-hover: rgba(0, 0, 0, 0.04);
+
+  --text-primary: #09090B;
+  --text-secondary: #52525B;
+  --text-muted: #A1A1AA;
+  --text-inverted: #FFFFFF;
+
+  --border-default: rgba(0, 0, 0, 0.08);
+  --border-subtle: #E4E4E7;
+  --border-strong: #D4D4D8;
+
+  --brand: #007AFF;
+  --brand-hover: #005BB5;
+  --brand-muted: rgba(0, 122, 255, 0.08);
+  --brand-border: rgba(0, 122, 255, 0.15);
+
+  --chart-bg: #FFFFFF;
+  --chart-border: #E4E4E7;
+
+  --scrollbar-thumb: #D4D4D8;
+
+  --badge-critical-bg: #FEF2F2;
+  --badge-critical-text: #DC2626;
+  --badge-critical-border: rgba(220, 38, 38, 0.2);
+  --badge-high-bg: #FFF7ED;
+  --badge-high-text: #EA580C;
+  --badge-high-border: rgba(234, 88, 12, 0.2);
+  --badge-medium-bg: #FEFCE8;
+  --badge-medium-text: #CA8A04;
+  --badge-medium-border: rgba(202, 138, 4, 0.2);
+  --badge-low-bg: #F0FDF4;
+  --badge-low-text: #16A34A;
+  --badge-low-border: rgba(22, 163, 74, 0.2);
+}
+
+@theme inline {
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-primary);
+  --font-outfit: 'Outfit', sans-serif;
+  --font-ibm-plex: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'IBM Plex Sans', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.025em;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Theme-aware component classes ── */
+
+@layer components {
+  .glass-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .glass-header {
+    background-color: var(--bg-elevated);
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    border-bottom: 1px solid var(--border-default);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .glass-sidebar {
+    background-color: var(--bg-elevated);
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    border-right: 1px solid var(--border-default);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .glass-button {
+    background-color: var(--brand-muted);
+    border: 1px solid var(--brand-border);
+    transition: all 0.2s ease;
+  }
+  .glass-button:hover {
+    background-color: rgba(0, 122, 255, 0.2);
+  }
+  .btn-primary {
+    @apply transition-all duration-200 font-medium rounded-lg px-4 py-2;
+    background-color: var(--brand);
+    color: var(--text-inverted);
+  }
+  .btn-primary:hover {
+    background-color: var(--brand-hover);
+  }
+  .btn-secondary {
+    @apply transition-all duration-200 font-medium rounded-lg px-4 py-2;
+    background-color: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text-secondary);
+  }
+  .btn-secondary:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+  }
+  .badge-critical {
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold;
+    background-color: var(--badge-critical-bg);
+    color: var(--badge-critical-text);
+    border: 1px solid var(--badge-critical-border);
+  }
+  .badge-high {
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold;
+    background-color: var(--badge-high-bg);
+    color: var(--badge-high-text);
+    border: 1px solid var(--badge-high-border);
+  }
+  .badge-medium {
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold;
+    background-color: var(--badge-medium-bg);
+    color: var(--badge-medium-text);
+    border: 1px solid var(--badge-medium-border);
+  }
+  .badge-low {
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold;
+    background-color: var(--badge-low-bg);
+    color: var(--badge-low-text);
+    border: 1px solid var(--badge-low-border);
+  }
+  .input-field {
+    @apply w-full rounded-lg px-4 py-2.5 transition-all duration-200;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+  }
+  .input-field::placeholder {
+    color: var(--text-muted);
+  }
+  .input-field:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+  }
+
+  /* Theme-aware utility classes for inline usage */
+  .theme-bg-base { background-color: var(--bg-base); transition: background-color 0.3s ease; }
+  .theme-bg-panel { background-color: var(--bg-panel); transition: background-color 0.3s ease; }
+  .theme-bg-surface { background-color: var(--bg-surface); transition: background-color 0.3s ease; }
+  .theme-bg-elevated { background-color: var(--bg-elevated); transition: background-color 0.3s ease; }
+  .theme-bg-input { background-color: var(--bg-input); transition: background-color 0.3s ease; }
+  .theme-bg-hover:hover { background-color: var(--bg-hover); }
+  .theme-text { color: var(--text-primary); transition: color 0.3s ease; }
+  .theme-text-secondary { color: var(--text-secondary); transition: color 0.3s ease; }
+  .theme-text-muted { color: var(--text-muted); transition: color 0.3s ease; }
+  .theme-border { border-color: var(--border-default); transition: border-color 0.3s ease; }
+  .theme-border-subtle { border-color: var(--border-subtle); transition: border-color 0.3s ease; }
+}
+
+@layer utilities {
+  .glow-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-[#007AFF] to-blue-400;
+  }
+}

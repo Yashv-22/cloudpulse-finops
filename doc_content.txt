@@ -1,0 +1,450 @@
+PROJECT
+CloudPulse Pro
+AWS Edition
+Autonomous AI FinOps & Cloud Governance Platform
+Document Type
+Unified Reference — PRD + Design Spec + Tech Stack
+Version
+2.0 (Rebuild)
+Status
+Draft / Technical Specification
+Lead Designer / Architect
+Yashvardhan Mishra
+Focus
+AWS-Native Autonomous Cloud Governance
+Theme
+Glassmorphism 2.0 (2026 Refined)
+Classification
+Confidential — Internal Use Only
+CloudPulse Pro  ·  Unified Technical Reference  ·  v2.0  ·  CONFIDENTIAL
+Table of Contents
+PART I
+	Product Requirements Document (PRD)
+  1.
+	Executive Summary
+  2.
+	Target Audience
+  3.
+	Functional Requirements
+  4.
+	Non-Functional Requirements & Security
+  5.
+	UI/UX Design Requirements
+  6.
+	Roadmap & Sprint Plan
+PART II
+	Visual & Design Specification
+  7.
+	Visual Identity & Design System
+  8.
+	UI Component Design
+  9.
+	System Architecture Design
+  10.
+	Logical Data Flow
+  11.
+	Security & Permission Design
+PART III
+	Technical Stack Reference
+  12.
+	Frontend Layer
+  13.
+	Backend Layer
+  14.
+	AI & Automation Integration
+  15.
+	Infrastructure & Security
+  16.
+	Project Structure & Dev Setup
+PART I — PRODUCT REQUIREMENTS DOCUMENT  (PRD V2.0)
+Product Requirements Document
+Autonomous AI FinOps & Cloud Governance Platform — AWS Edition
+1.  Executive Summary
+CloudPulse Pro
+An autonomous B2B SaaS platform designed to bridge the gap between cloud financial management (FinOps) and security governance. By leveraging AI-driven agents, the platform identifies cost-leakage, security vulnerabilities, and carbon inefficiencies — providing Zero-Touch autonomous remediation via Infrastructure-as-Code (Terraform).
+2.  Target Audience
+User Persona
+Primary Need
+Key Feature Used
+DevOps / SRE Teams
+Automate cleanup of Zombie Resources (idle EC2, unattached EBS, orphaned RDS snapshots)
+Zombie Resource Hunter + AI Remediation Engine
+CTOs / Finance Leads
+Real-time visibility into AWS spend and ROI with actionable savings recommendations
+Cost Explorer Integration + Savings Recommender
+Security Engineers
+Maintain a high Compliance Index through automated posture management and audit trails
+Compliance Index Dashboard + Security Group Auditor
+3.  Functional Requirements
+3.1  FinOps & Cost Optimization
+FR-1
+Zombie Resource Hunter: Automated scanning for unattached EBS volumes, idle ALBs, and orphaned RDS snapshots using Boto3 queries against AWS EC2, ELB, and RDS APIs.
+FR-2
+Cost Explorer Integration: Pull daily and monthly granular spend data via the AWS Cost Explorer API (ce). Visualize spend trends with Recharts/Tremor on the dashboard.
+FR-3
+Savings Recommendations: Logic engine to suggest switching idle On-Demand instances to Spot or Reserved Instances, with projected monthly savings estimates.
+3.2  Autonomous Governance
+FR-4
+Live Compliance Index: A real-time score (0-100%) calculated from security posture indicators: S3 bucket encryption status, MFA enforcement, public access blocks, and more.
+FR-5
+Security Group Auditing: Detection and flagging of overly permissive rules — specifically Port 22 (SSH) and Port 3389 (RDP) open to 0.0.0.0/0.
+FR-6
+AI Remediation Engine: LangChain-powered agent that generates production-grade Terraform scripts to fix detected security risks. One-click staged deployment with human approval gate.
+3.3  GreenOps (Sustainability)
+FR-7
+Carbon Tracker: Estimate the carbon footprint of AWS resources based on region, instance type, and utilization metrics sourced from AWS CloudWatch.
+FR-8
+Regional Arbitrage: Suggest migration of non-critical workloads to Green Regions (lower carbon intensity per kWh) with automated migration cost-benefit analysis.
+4.  Non-Functional Requirements & Security
+NFR
+Requirement
+Detail
+Security
+IAM Least Privilege
+App operates via dedicated IAM Role: ReadOnlyAccess for scanning; scoped Write permissions via temporary STS token for remediation only.
+Encryption
+AES-256 at Rest
+All user-stored AWS credentials and metadata encrypted at rest using AES-256. KMS-managed keys.
+Compliance
+GDPR / SOC 2
+PII handling follows GDPR guidelines. Audit logs immutable and timestamped.
+Reliability
+CAPTCHA & 403 Handling
+Scraper workers implement exponential backoff and proxy rotation to handle 403 Forbidden responses.
+Scalability
+Independent Worker Scaling
+AI, scraper, and heuristic workers are containerized and scale independently of the web server.
+5.  UI/UX Design Requirements
+The interface must maintain a high-end, production-grade aesthetic consistent with the original project files.
+Element
+Specification
+Design Language
+Glassmorphism 2.0 — frosted glass containers, depth layers, vibrant gradients on dark base.
+Primary Background
+#0a0a0c — deep obsidian for maximum contrast in dark mode.
+Glass Surface
+rgba(255,255,255,0.05) — semi-transparent frosted overlay on cards.
+Default Mode
+Dark Mode. No light mode toggle required in v2.0.
+Status Indicators
+Green + pulse animation for Active; Red (#ef4444) for Critical Risk; Purple (#a855f7) for AI/Autopilot actions.
+Navigation
+Persistent sidebar: Dashboard, Autopilot, Governance, GreenOps, Settings.
+Animations
+Framer Motion for smooth transitions, card entry, and glow pulse effects.
+6.  Roadmap & Sprint Plan
+Sprint
+Focus
+Key Deliverables
+Sprint 1
+Foundation
+Next.js 14 boilerplate, Glassmorphism component library, Tailwind design tokens, landing page + auth flows.
+Sprint 2
+Data Collection
+Boto3 integration for Zombie Resource detection — EBS volumes, ELB request metrics, RDS snapshot age checks.
+Sprint 3
+AI Engine
+LangChain agent for Terraform script generation. Heuristic scoring engine. AI Recommendations dashboard.
+Sprint 4
+Governance + GreenOps
+Compliance Index gauge, Security Group auditor, Carbon Tracker cards, Regional Arbitrage suggestions.
+PART II — VISUAL & DESIGN SPECIFICATION  (DESIGN SPEC V1.0)
+Design Specification Document
+Visual & Structural Blueprint  ·  Glassmorphism 2.0 (2026 Refined)
+7.  Visual Identity & Design System
+7.1  Color Palette
+Element
+Hex Code
+Purpose
+Primary Background
+#0a0a0c
+Deep obsidian base for high-contrast dark mode.
+Glass Surface
+rgba(255,255,255,0.05)
+Semi-transparent frosted layer over all cards.
+Accent Primary
+#3b82f6 (Blue)
+AWS resource links, interactive elements, and CTAs.
+Security Alert
+#ef4444 (Red)
+Critical compliance failures (e.g., Port 22 open to 0.0.0.0/0).
+Optimization Glow
+#a855f7 (Purple)
+AI-driven Autopilot actions and remediation indicators.
+GreenOps
+#16a34a (Green)
+Sustainability scores and Green Region recommendations.
+7.2  Typography & Depth Strategy
+Font Family
+Inter (Variable Weight) — chosen for high readability on dark backgrounds at small sizes.
+Depth Level 1
+Background mesh gradient (Blue + Purple radial). Base z-index layer.
+Depth Level 2
+Glass cards with backdrop-filter: blur(16px) + border: 1px solid rgba(255,255,255,0.1).
+Depth Level 3
+High-contrast text (#F9FAFB) and glowing SVG icons with CSS drop-shadow filters.
+Heading Weights
+700 (Bold) for H1/H2; 500 (Medium) for H3; 400 (Regular) for body text.
+8.  UI Component Design
+8.1  The Compliance Gauge Component
+The Compliance Gauge is a custom SVG component representing the current security posture score as a semi-circular arc with a neon-purple glow.
+Type
+Custom SVG React Component
+Input
+Integer 0-100 (compliance score)
+Visual
+Semi-circular path with neon-purple stroke; CSS drop-shadow for glow effect.
+Arc Formula
+Path length L = 2 x PI x r x (score / 100). Calculated dynamically per score update.
+Animation
+Framer Motion spring animation on score change. Pulse glow on Critical threshold (<50).
+8.2  Dynamic Cost Heatmap
+A grid-based component visualizing AWS resource utilization across instance families and regions.
+Rows
+Instance Families: t3, m5, c6g, r6i, c6a
+Columns
+AWS Regions: us-east-1, eu-west-1, ap-south-1, ap-southeast-1
+Visual Logic
+Glass tile opacity corresponds to cost intensity. Higher spend = higher opacity = warmer glass tint.
+Interaction
+Click-to-drill: selecting a tile opens the Resource Detail panel for that family/region combination.
+8.3  Dashboard Pages
+Page / Route
+Description
+/ (Landing)
+High-conversion Hero page: AI Intelligence, Autonomous Remediation, Zero-Trust Security value props.
+/dashboard (Overview)
+KPIs: Total Monthly Savings, Waste Score (0-100), Pending Remediations count.
+/resources
+Detailed AWS resource inventory (EC2, RDS, S3, EBS) with individual waste scores and risk tiers.
+/recommendations
+AI-generated optimization tasks with estimated savings, confidence score, and Terraform preview.
+/cost-explorer
+Visual spend patterns, heatmap, and savings opportunity timeline.
+/settings
+AWS Account integration, IAM Role ARN input, AI sensitivity thresholds.
+9.  System Architecture Design
+9.1  The Agent + Event Loop Pattern (2026 Standard)
+CloudPulse Pro uses an Async Event Fabric rather than traditional request-response. This enables real-time streaming of AI reasoning to the dashboard.
+Step
+Stage
+Description
+1
+Scanner Trigger
+Cron job or user action triggers a Lambda/Celery background task.
+2
+AWS Audit
+Boto3 queries AWS Config and Cost Explorer APIs for resource metadata.
+3
+AI Planning
+LangChain analyzes results. If a Zombie is found, it creates a Remediation Plan event.
+4
+UI Streaming
+Backend uses Server-Sent Events (SSE) to stream the AI thought process to the glass-card terminal in real-time.
+10.  Logical Data Flow — Zombie Resource Detection
+Step 1: Identification Queries
+EBS
+Query all volumes with State: available (unattached). Flag volumes with last-attach-time > 30 days.
+RDS
+Identify automated snapshots older than X days with no associated active DB instance ARN.
+ELB / ALB
+Flag Application Load Balancers where CloudWatch RequestCount = 0 over the trailing 7-day window.
+Step 2: AI Remediation Prompt Template
+LangChain System Prompt
+"You are a CloudPulse Pro AI Agent. Analyze this AWS resource: {resource_metadata}. Generate a Terraform destroy or modify script to optimize cost while maintaining a 0% risk profile. Include a Reasoning block explaining the decision, an Estimated Monthly Savings figure, and a Confidence Score (0-100)."
+Step 3: Verification Gate
+All AI-generated Terraform code is passed through a terraform validate check in an isolated sandbox container before being surfaced to the user. Output is never shown if validation fails.
+11.  Security & Permission Design
+Principle of Least Privilege
+Since the application has the ability to modify and delete production infrastructure, the permission model follows strict least-privilege design with two distinct IAM modes.
+Mode
+IAM Policy
+Activation
+Scope
+Audit Mode
+arn:aws:iam::aws:policy/ReadOnlyAccess
+Always active during scanning and dashboard refresh.
+List and Describe permissions only. No writes.
+Remediation Mode
+Custom Scoped Policy
+Only activated when user explicitly clicks Execute Fix.
+Targets specific resource IDs via temporary STS token. Expires after 1 hour.
+PART III — TECHNICAL STACK REFERENCE  (V2.0)
+Technical Stack Documentation
+Standard Engineering Specification — CloudPulse Engineering Team
+12.  Stack at a Glance
+Layer
+Technology
+Version / Notes
+Frontend Framework
+Next.js 14+ (App Router)
+React 18, SSR/SSG, optimized routing
+Styling
+Tailwind CSS
+Utility-first, Glassmorphism utilities
+Animations
+Framer Motion
+Transitions, glow effects, spring physics
+Icons
+Lucide-React
+Clean, consistent icon set
+Charts
+Recharts / Tremor.so
+Financial and utilization data visualization
+State Management
+Zustand
+Lightweight global state (region, session)
+Data Fetching
+TanStack Query (React Query)
+Caching, loading/error states for AWS data
+Backend Framework
+FastAPI (Python 3.11+)
+Async, auto OpenAPI/Swagger docs
+Validation
+Pydantic v2
+Strict typing of AWS API responses
+Task Queue
+Celery + Redis
+Background scanning and remediation jobs
+AWS SDK
+Boto3
+Cost Explorer, EC2, IAM, Config, S3
+LLM Orchestration
+LangChain
+Prompt chaining, tool use, agent loops
+Primary LLM
+GPT-4o / Claude 3.5 Sonnet (Bedrock)
+Terraform generation and deep analysis
+Secondary LLM
+Llama 3 (Local/Ollama)
+Lightweight metadata classification (cost saving)
+Database
+PostgreSQL
+User profiles, scan logs, compliance history
+Cache
+Redis
+Real-time Compliance Index, session data
+Auth
+NextAuth.js or Clerk
+Secure login with MFA support
+Frontend Hosting
+AWS Amplify
+Fully managed, CDN-backed
+Backend Hosting
+AWS App Runner
+Auto-scaling container hosting
+13.  Frontend Layer
+Next.js 14+ (App Router)
+React-based framework powering the dashboard, resource explorer, recommendations, and compliance views.
+Why Next.js 14
+SSR ensures fast initial loads for data-heavy dashboards. App Router provides robust structure for SSE-driven AI streaming views.
+Key Pages
+Landing / Login / Signup / Dashboard / Resources / Recommendations / Cost Explorer / Settings
+Rendering Strategy
+Server Components for read-heavy pages (resources, cost). Client Components for interactive elements (gauge, approval modals).
+Glassmorphism Implementation
+Blur Effect
+backdrop-filter: blur(16px) on all card surfaces. Requires webkit prefix for Safari compatibility.
+Transparency
+background: rgba(255,255,255,0.05) with border: 1px solid rgba(255,255,255,0.10).
+Glow Effects
+box-shadow: 0 0 20px rgba(59,130,246,0.3) for blue glow; 0 0 20px rgba(168,85,247,0.3) for purple.
+Dark Base
+#0a0a0c background with radial-gradient mesh (blue-to-purple) at z-index 0.
+14.  Backend Layer
+FastAPI (Python 3.11+)
+High-performance ASGI framework serving as the intelligence hub and API gateway.
+Why FastAPI
+Native async support handles long-running Boto3 scans and LLM calls without blocking the event loop.
+Key Routers
+/auth (JWT) · /dashboard (KPI aggregation) · /resources (scan + filter) · /remediation (Terraform gen + execute)
+Background Tasks
+Celery workers consume tasks from Redis queues for scans that may run 30-120 seconds.
+Retry Policy
+Exponential backoff, max 3 retries for AWS API failures. Dead-letter queue for persistent errors.
+Core Service Architecture
+Service
+Location
+Responsibility
+Heuristic Engine
+app/services/heuristic.py
+Rule-based scoring: e.g., CPU < 5% = waste_score 80. Fast, no LLM cost.
+AI Engine
+app/services/ai_engine.py
+LangChain + GPT-4 Turbo for deep analysis. Triggered when waste_score > 70.
+Remediation Engine
+app/services/remediation.py
+Translates recommendations into Terraform code. Calls terraform validate before surfacing.
+Collector Service
+app/collectors/
+Service-oriented Boto3 wrappers for EC2, S3, RDS. Feeds analysis pipeline.
+Event Bus
+app/services/event_bus.py
+Async message system for non-blocking background task dispatch.
+15.  AI & Automation Integration
+LangChain Orchestration
+Why LangChain
+Abstracts LLM provider switching (OpenAI GPT-4o <-> Claude 3.5 Sonnet via Bedrock) and provides reusable chain primitives.
+Key Chains
+ResourceAnalysisChain · TerraformGenerationChain · SavingsReasoningChain · ComplianceExplainerChain
+AI Logic Loop
+1. Extract JSON metadata of Zombie Resource. 2. Send to LLM via LangChain with structured system prompt. 3. Validate generated Terraform in sandbox. 4. Surface to user approval queue.
+Cost Optimization
+Llama 3 (Ollama, local) handles lightweight metadata classification tasks to avoid LLM API costs for simple heuristics.
+16.  Infrastructure & Dev Setup
+Infrastructure Overview
+Component
+Technology
+Purpose
+Database
+PostgreSQL
+User profiles, historical scan logs, compliance scores, application audit trail.
+Cache
+Redis
+Real-time Compliance Index gauge updates and session data.
+Auth
+NextAuth.js or Clerk
+Secure login with MFA. JWT token-based API auth.
+Frontend Hosting
+AWS Amplify
+Fully managed CDN-backed Next.js hosting with CI/CD on push.
+Backend Hosting
+AWS App Runner
+Auto-scaling containerized FastAPI. No infrastructure management.
+Secrets
+AWS Secrets Manager
+IAM Role ARNs, API keys, DB credentials. Zero plaintext policy.
+Monitoring
+AWS CloudWatch
+Infrastructure metrics, Lambda execution logs, Celery worker health.
+Environment Configuration (.env)
+Backend .env (Required Variables)
+DATABASE_URL=postgresql://user:password@localhost:5432/cloudpulse
+REDIS_URL=redis://localhost:6379/0
+OPENAI_API_KEY=sk-proj-...
+AWS_REGION=us-east-1
+AWS_PROFILE=cloudpulse-dev
+NOTE: Use IAM Roles (not static credentials) in production. Never commit AWS_ACCESS_KEY_ID or AWS_SECRET_ACCESS_KEY to version control.
+Project Structure
+Path
+Contents
+backend/app/api/routers.py
+Auth, Dashboard, Resources, and Remediation API route handlers
+backend/app/services/
+AI Engine, Heuristic Engine, Remediation Engine, Event Bus
+backend/app/collectors/
+Boto3 wrappers: EC2, S3, RDS, Cost Explorer, CloudWatch
+backend/app/models/
+SQLAlchemy DB schemas: User, Resource, Scan, Application
+backend/app/tasks/
+Celery workers for background scan and execution jobs
+frontend-next/src/app/
+Next.js App Router pages: dashboard, resources, recommendations, settings
+frontend-next/src/components/
+UI Components: GlassCard, ComplianceGauge, CostHeatmap, ResourceTable
+docker-compose.yml
+Orchestration for Redis, PostgreSQL, and FastAPI backend
+Implementation Note — Starting Point
+Recommended First Step for Security Engineers
+Begin with the Backend IAM Policies before writing any application code. Define a 'Security Auditor' IAM Role with List and Describe permissions only, and explicitly Deny all Delete and Modify actions. This ensures the AI remediation engine cannot accidentally wipe production infrastructure during development and testing phases. Only add scoped Write permissions once the heuristic scoring engine has been validated against a staging environment.
+This document supersedes all prior individual specifications for Project CloudPulse Pro.  ·  v2.0  ·  Yashvardhan Mishra  ·  CONFIDENTIAL

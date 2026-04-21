@@ -1,0 +1,120 @@
+{
+  "theme": "dark",
+  "archetype": "4 (Swiss & High-Contrast)",
+  "typography": {
+    "headings": {
+      "fontFamily": "Outfit, sans-serif",
+      "classes": "font-outfit tracking-tight",
+      "usage": "Use Outfit for all Main and Sub-headings. Do not use Inter or generic sans."
+    },
+    "body": {
+      "fontFamily": "IBM Plex Sans, sans-serif",
+      "classes": "font-ibm-plex text-zinc-300",
+      "usage": "Use for all body text, tables, and standard UI elements."
+    },
+    "mono": {
+      "fontFamily": "JetBrains Mono, monospace",
+      "classes": "font-mono text-sm",
+      "usage": "Use for Terraform/CLI scripts, AWS ARNs, and JSON."
+    }
+  },
+  "colors": {
+    "background": {
+      "base": "#09090B",
+      "panel": "#18181B"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#A1A1AA",
+      "muted": "#71717A"
+    },
+    "brand": {
+      "primary": "#007AFF",
+      "hover": "#005BB5"
+    },
+    "severities": {
+      "critical": "#FF3B30",
+      "high": "#FF9500",
+      "medium": "#FFCC00",
+      "low": "#34C759",
+      "monitor": "#8E8E93"
+    },
+    "border": {
+      "default": "rgba(255, 255, 255, 0.1)",
+      "hover": "rgba(255, 255, 255, 0.2)"
+    }
+  },
+  "surfaces": {
+    "glass_header_sidebar": {
+      "classes": "bg-black/40 backdrop-blur-2xl backdrop-saturate-150 border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]",
+      "usage": "Use strictly for the top sticky navigation, floating sidebars, toasts, and modal overlays."
+    },
+    "dashboard_card": {
+      "classes": "bg-zinc-900/50 border border-zinc-800 rounded-xl",
+      "hover": "hover:-translate-y-1 hover:border-zinc-700 hover:shadow-lg transition-all duration-300",
+      "usage": "Use for all main dashboard widgets (charts, tables, metrics) to maintain hierarchy and prevent glassmorphism overload."
+    },
+    "code_block": {
+      "classes": "bg-black/80 border border-zinc-800 rounded-lg p-4 font-mono text-zinc-300"
+    }
+  },
+  "spacing_and_layout": {
+    "grid": {
+      "classes": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6",
+      "usage": "Control Room Grid layout. Every pixel must be utilized."
+    },
+    "padding": {
+      "card": "p-6 lg:p-8"
+    }
+  },
+  "motion": {
+    "hover": "Explicit hover states on all interactive elements (e.g., hover:text-white hover:bg-zinc-800)",
+    "transitions": "transition-all duration-200 ease-out"
+  },
+  "components": {
+    "badges": "For severities: use solid dark backgrounds with vibrant 1px borders and text. e.g., bg-red-950/50 text-red-500 border-red-500/30.",
+    "buttons": "Primary buttons: bg-blue-600 text-white hover:bg-blue-500. Secondary: bg-transparent border border-zinc-700 hover:bg-zinc-800.",
+    "tables": "Go cardless or rectangular. Dense styling for data-heavy FinOps views.",
+    "charts": "Use Recharts or Shadcn Charts. Vibrant neon lines over dark minimal grids."
+  },
+  "icons": {
+    "library": "lucide-react",
+    "strokeWidth": "1.5"
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.unsplash.com/photo-1698156731209-b2fae65b5d24?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGRhcmslMjBncmFkaWVudCUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzc2Mjk2ODU4fDA&ixlib=rb-4.1.0&q=85",
+        "category": "background",
+        "description": "Abstract blurry dark gradient (orange/blue). Use as a full-page background for the Login/Auth page."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1761319659795-543075eaeaad?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMGRhcmslMjB0ZWNobm9sb2d5JTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3NzYyOTY4NTh8MA&ixlib=rb-4.1.0&q=85",
+        "category": "background_effect",
+        "description": "Abstract streaks of light. Can be used as a subtle texture overlay on empty states or hero."
+      },
+      {
+        "url": "https://images.pexels.com/photos/35839966/pexels-photo-35839966.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "avatar_main",
+        "description": "Moody B&W portrait of a man in glasses. Use as the active user's profile avatar."
+      },
+      {
+        "url": "https://images.pexels.com/photos/6146051/pexels-photo-6146051.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "avatar_secondary",
+        "description": "Portrait of a bald man in a black suit. Use as an alternative team member avatar in approval workflows."
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Install fonts: Outfit (Headings), IBM Plex Sans (Body), JetBrains Mono (Code).",
+    "Implement a dark theme base (bg-zinc-950) globally.",
+    "Use Crystal Glassmorphism ONLY for the Sidebar, Header, Modals, and Toasts. Do not overuse glass on standard dashboard cards.",
+    "Use 'dashboard_card' styles (flat dark background, 1px border) for metrics, charts, and table wrappers.",
+    "Build the dashboard using the 'Control Room' grid approach. Eliminate jagged bottoms by ensuring all cards have h-full.",
+    "Data heavy views (Resource Inventory, Cost Explorer) must be dense and easily scannable.",
+    "Add 'data-testid' to all buttons, navigation links, and major interactive widgets.",
+    "Ensure hover states explicitly define color changes (e.g., hover:text-white).",
+    "Do NOT use purple or teal green/blue anywhere in the UI.",
+    "The login page should feature the provided abstract blurry gradient background image, overlaid with a glassmorphic login card."
+  ]
+}
