@@ -101,7 +101,7 @@ export default function Resources() {
                 onClick={() => { setStatusFilter(s); setPage(1); }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
                   statusFilter === s
-                    ? "bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30"
+                    ? "bg-[var(--brand-muted)] text-[var(--brand)] border border-[var(--brand-border)]"
                     : "bg-[var(--bg-hover)] theme-text-secondary border border-[var(--border-strong)] hover:text-[var(--text-primary)]"
                 }`}
               >
@@ -118,8 +118,8 @@ export default function Resources() {
         ) : (
           <>
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-zinc-300">
-                <thead className="text-xs uppercase text-zinc-500 border-b border-zinc-800">
+              <table className="w-full text-left text-sm text-[var(--text-secondary)]">
+                <thead className="text-xs uppercase text-[var(--text-muted)] border-b border-[var(--border-subtle)]">
                   <tr>
                     <th className="px-4 py-3 font-medium">Resource</th>
                     <th className="px-4 py-3 font-medium">Type</th>
@@ -131,15 +131,15 @@ export default function Resources() {
                 </thead>
                 <tbody>
                   {(data?.resources || []).map((r) => (
-                    <tr key={r.resource_id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                    <tr key={r.resource_id} className="border-b border-[var(--border-subtle)] hover:bg-[var(--bg-hover)] transition-colors">
                       <td className="px-4 py-3.5">
-                        <Link href={`/resources/${r.resource_id}`} className="hover:text-[#007AFF] transition-colors">
-                          <div className="font-medium text-zinc-200">{r.name}</div>
-                          <div className="text-xs text-zinc-600 font-mono">{r.resource_id}</div>
+                        <Link href={`/resources/${r.resource_id}`} className="hover:text-[var(--brand)] transition-colors">
+                          <div className="font-medium text-[var(--text-primary)]">{r.name}</div>
+                          <div className="text-xs text-[var(--text-muted)] font-mono">{r.resource_id}</div>
                         </Link>
                       </td>
-                      <td className="px-4 py-3.5 text-zinc-400">{r.type} ({r.instance_type})</td>
-                      <td className="px-4 py-3.5 font-mono text-zinc-200">{formatCurrency(r.cost_monthly)}</td>
+                      <td className="px-4 py-3.5 text-[var(--text-secondary)]">{r.type} ({r.instance_type})</td>
+                      <td className="px-4 py-3.5 font-mono text-[var(--text-primary)]">{formatCurrency(r.cost_monthly)}</td>
                       <td className="px-4 py-3.5">
                         <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusBadge(r.status)}`}>
                           {r.status}
@@ -148,12 +148,12 @@ export default function Resources() {
                       <td className="px-4 py-3.5">
                         <span className={`${tierBadge(r.waste_tier)}`}>{r.waste_tier}</span>
                       </td>
-                      <td className="px-4 py-3.5 text-[#007AFF] text-xs">{r.recommendation}</td>
+                      <td className="px-4 py-3.5 text-[var(--brand)] text-xs">{r.recommendation}</td>
                     </tr>
                   ))}
                   {(data?.resources || []).length === 0 && (
                     <tr>
-                      <td colSpan={6} className="px-4 py-12 text-center text-zinc-600">
+                      <td colSpan={6} className="px-4 py-12 text-center text-[var(--text-muted)]">
                         No resources found matching your criteria.
                       </td>
                     </tr>
@@ -163,8 +163,8 @@ export default function Resources() {
             </div>
 
             {data && data.pages > 1 && (
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-zinc-800">
-                <span className="text-sm text-zinc-500">{data.total} resources total</span>
+              <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border-subtle)]">
+                <span className="text-sm text-[var(--text-muted)]">{data.total} resources total</span>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setPage(Math.max(1, page - 1))}
@@ -173,7 +173,7 @@ export default function Resources() {
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
-                  <span className="text-sm text-zinc-400">Page {page} of {data.pages}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">Page {page} of {data.pages}</span>
                   <button
                     onClick={() => setPage(Math.min(data.pages, page + 1))}
                     disabled={page === data.pages}

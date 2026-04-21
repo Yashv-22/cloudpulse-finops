@@ -18,7 +18,7 @@ if config.config_file_name is not None:
 target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:
-    url = "sqlite+aiosqlite:///./cloudpulse.db"
+    url = "sqlite+aiosqlite:///./cloudpulse_v3.db"
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -35,7 +35,7 @@ def do_run_migrations(connection: Connection) -> None:
 
 async def run_async_migrations() -> None:
     configuration = config.get_section(config.config_ini_section, {})
-    configuration["sqlalchemy.url"] = "sqlite+aiosqlite:///./cloudpulse.db"
+    configuration["sqlalchemy.url"] = "sqlite+aiosqlite:///./cloudpulse_v3.db"
     connectable = async_engine_from_config(
         configuration,
         prefix="sqlalchemy.",

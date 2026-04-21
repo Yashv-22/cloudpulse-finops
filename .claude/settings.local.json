@@ -7,7 +7,11 @@
       "Bash(venv/Scripts/python -c \"from app.main import app; print\\('Backend OK'\\)\")",
       "Bash(venv/Scripts/uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload)",
       "Bash(npm run *)",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "Bash(./venv/Scripts/python -c \"from app.main import app; print\\('OK: FastAPI app loaded'\\)\")",
+      "Bash(./venv/Scripts/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000)",
+      "Bash(npx tsc *)",
+      "Bash(npx eslint *)"
     ]
   }
 }

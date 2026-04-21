@@ -1,0 +1,58 @@
+{
+  "files": {
+    "code": [
+      "eslint.config.mjs",
+      "next-env.d.ts",
+      "next.config.ts",
+      "postcss.config.mjs",
+      "src\\app\\layout.tsx",
+      "src\\app\\page.tsx",
+      "src\\app\\(dashboard)\\layout.tsx",
+      "src\\app\\(dashboard)\\compliance\\page.tsx",
+      "src\\app\\(dashboard)\\cost-explorer\\page.tsx",
+      "src\\app\\(dashboard)\\dashboard\\page.tsx",
+      "src\\app\\(dashboard)\\notifications\\page.tsx",
+      "src\\app\\(dashboard)\\recommendations\\page.tsx",
+      "src\\app\\(dashboard)\\resources\\page.tsx",
+      "src\\app\\(dashboard)\\resources\\[id]\\page.tsx",
+      "src\\app\\(dashboard)\\settings\\page.tsx",
+      "src\\app\\login\\page.tsx",
+      "src\\app\\signup\\page.tsx",
+      "src\\components\\layout\\Navbar.tsx",
+      "src\\components\\layout\\Sidebar.tsx",
+      "src\\components\\ui\\GlassCard.tsx",
+      "src\\components\\ui\\KpiWidget.tsx",
+      "src\\components\\ui\\RemediationModal.tsx",
+      "src\\components\\ui\\Skeleton.tsx",
+      "src\\components\\ui\\ToggleSwitch.tsx",
+      "src\\context\\PreferencesContext.tsx",
+      "src\\lib\\api.ts",
+      "src\\lib\\mock-data.ts",
+      "src\\lib\\store.ts",
+      "src\\lib\\use-fetch.ts",
+      "src\\lib\\utils.ts"
+    ],
+    "document": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "README.md"
+    ],
+    "paper": [],
+    "image": [
+      "public\\file.svg",
+      "public\\globe.svg",
+      "public\\next.svg",
+      "public\\vercel.svg",
+      "public\\window.svg"
+    ],
+    "video": []
+  },
+  "total_files": 38,
+  "total_words": 9848,
+  "needs_graph": false,
+  "warning": "Corpus is ~9,848 words - fits in a single context window. You may not need a graph.",
+  "skipped_sensitive": [
+    "src\\app\\forgot-password\\page.tsx"
+  ],
+  "graphifyignore_patterns": 0
+}

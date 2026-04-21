@@ -11,14 +11,22 @@ import {
   Shield,
   LogOut,
   ChevronRight,
+  Database,
+  Cpu,
+  Globe,
+  Cloud,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/lib/store";
 
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Resources", href: "/resources", icon: Server },
+  { name: "All Resources", href: "/resources", icon: Server },
   { name: "Cost Explorer", href: "/cost-explorer", icon: Activity },
+  { name: "Compute", href: "/compute", icon: Cpu },
+  { name: "Storage", href: "/storage", icon: Database },
+  { name: "Network", href: "/vpc", icon: Globe },
+  { name: "Serverless", href: "/lambda", icon: Cloud },
   { name: "Recommendations", href: "/recommendations", icon: Zap },
   { name: "Compliance", href: "/compliance", icon: Shield },
   { name: "Settings", href: "/settings", icon: Settings },
@@ -48,7 +56,7 @@ export function Sidebar() {
           className="flex items-center gap-2.5 mb-10 px-2"
           data-testid="sidebar-logo"
         >
-          <Shield className="text-[#007AFF] w-8 h-8" strokeWidth={1.5} />
+          <Shield className="text-[var(--brand)] w-8 h-8" strokeWidth={1.5} />
           <span className="text-xl font-bold glow-text tracking-tight">
             CloudPulse
           </span>
@@ -91,7 +99,7 @@ export function Sidebar() {
           className="flex items-center gap-3 p-2 rounded-lg theme-bg-hover transition-colors mb-2"
           data-testid="sidebar-profile"
         >
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#007AFF] to-blue-400 flex items-center justify-center font-semibold text-white text-sm shadow-lg">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--brand)] to-[var(--brand-hover)] flex items-center justify-center font-semibold text-[var(--text-primary)] text-sm shadow-lg">
             {initials}
           </div>
           <div className="flex flex-col min-w-0">
@@ -106,7 +114,7 @@ export function Sidebar() {
         <button
           onClick={handleLogout}
           data-testid="sidebar-logout"
-          className="flex items-center gap-2 w-full px-4 py-2 rounded-lg text-sm text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+          className="flex items-center gap-2 w-full px-4 py-2 rounded-lg text-sm text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
         >
           <LogOut className="w-4 h-4" strokeWidth={1.5} />
           Sign Out

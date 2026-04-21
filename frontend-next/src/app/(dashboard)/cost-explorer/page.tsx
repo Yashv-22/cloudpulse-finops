@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, BarChart, Bar } from "recharts";
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { Filter, Download, Zap, AlertTriangle, TrendingDown } from "lucide-react";
+import { Download, AlertTriangle, TrendingDown } from "lucide-react";
 import { api } from "@/lib/api";
 import { useFetch } from "@/lib/use-fetch";
 import { usePreferences } from "@/context/PreferencesContext";
@@ -39,7 +39,7 @@ export default function CostExplorer() {
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-2">
         <div>
           <h1 className="text-3xl font-bold mb-1">Cost Explorer</h1>
-          <p className="text-zinc-500">Deep dive into historical cloud spending and forecasting.</p>
+          <p className="text-[var(--text-muted)]">Deep dive into historical cloud spending and forecasting.</p>
         </div>
         <div className="flex gap-2">
           {rangeTabs.map((t) => (
@@ -48,7 +48,7 @@ export default function CostExplorer() {
               onClick={() => setRange(t.value)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 range === t.value
-                  ? "bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30"
+                  ? "bg-[var(--brand-muted)] text-[var(--brand)] border border-[var(--brand-border)]"
                   : "btn-secondary"
               }`}
             >
@@ -72,8 +72,8 @@ export default function CostExplorer() {
                 <AreaChart data={dailyData?.data || []}>
                   <defs>
                     <linearGradient id="costFill" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#007AFF" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#007AFF" stopOpacity={0} />
+                      <stop offset="5%" stopColor="var(--brand)" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="var(--brand)" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="forecastFill" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.2} />
@@ -83,7 +83,7 @@ export default function CostExplorer() {
                   <XAxis dataKey="date" stroke="#52525B" fontSize={11} tickLine={false} axisLine={false} />
                   <YAxis stroke="#52525B" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => `$${v}`} />
                   <Tooltip contentStyle={{ backgroundColor: "#18181B", borderColor: "#27272A", borderRadius: "8px", fontSize: "12px" }} />
-                  <Area type="monotone" dataKey="cost" stroke="#007AFF" strokeWidth={2} fillOpacity={1} fill="url(#costFill)" name="Actual" />
+                  <Area type="monotone" dataKey="cost" stroke="var(--brand)" strokeWidth={2} fillOpacity={1} fill="url(#costFill)" name="Actual" />
                   <Area type="monotone" dataKey="forecast" stroke="#8B5CF6" strokeWidth={1.5} strokeDasharray="5 5" fillOpacity={1} fill="url(#forecastFill)" name="Forecast" />
                 </AreaChart>
               </ResponsiveContainer>
@@ -103,10 +103,10 @@ export default function CostExplorer() {
                 <GlassCard key={a.id} className="p-6">
                   <div className="flex items-center gap-2 mb-2">
                     <AlertTriangle className="w-4 h-4 text-orange-500" />
-                    <h3 className="text-sm font-semibold text-zinc-400">Cost Spike Detected</h3>
+                    <h3 className="text-sm font-semibold text-[var(--text-secondary)]">Cost Spike Detected</h3>
                   </div>
-                  <p className="text-2xl font-bold text-white mb-2">+{formatCurrency(a.spike_amount)}</p>
-                  <p className="text-xs text-zinc-500 mb-4">{a.description}</p>
+                  <p className="text-2xl font-bold text-[var(--text-primary)] mb-2">+{formatCurrency(a.spike_amount)}</p>
+                  <p className="text-xs text-[var(--text-muted)] mb-4">{a.description}</p>
                   <span className={`text-xs px-2 py-1 rounded-full ${a.severity === "high" ? "badge-high" : "badge-medium"}`}>
                     {a.severity}
                   </span>
@@ -116,12 +116,12 @@ export default function CostExplorer() {
               <GlassCard className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <TrendingDown className="w-4 h-4 text-green-500" />
-                  <h3 className="text-sm font-semibold text-zinc-400">AI Forecasting</h3>
+                  <h3 className="text-sm font-semibold text-[var(--text-secondary)]">AI Forecasting</h3>
                 </div>
-                <p className="text-xl font-bold text-white mb-1">
+                <p className="text-xl font-bold text-[var(--text-primary)] mb-1">
                   -{formatCurrency(anomalyData?.forecast_savings || 0)}
                 </p>
-                <p className="text-xs text-zinc-500">
+                <p className="text-xs text-[var(--text-muted)]">
                   Implement top recommendations to reduce end-of-month spend by {anomalyData?.forecast_savings_pct || 0}%.
                 </p>
               </GlassCard>
@@ -137,7 +137,7 @@ export default function CostExplorer() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="text-xs uppercase text-zinc-500 border-b border-zinc-800">
+              <thead className="text-xs uppercase text-[var(--text-muted)] border-b border-[var(--border-subtle)]">
                 <tr>
                   <th className="px-4 py-3 font-medium">Service</th>
                   <th className="px-4 py-3 font-medium">Current Month</th>
@@ -147,12 +147,12 @@ export default function CostExplorer() {
               </thead>
               <tbody>
                 {(serviceData?.data || []).map((s) => (
-                  <tr key={s.service} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
-                    <td className="px-4 py-3 font-medium text-zinc-200">{s.service}</td>
+                  <tr key={s.service} className="border-b border-[var(--border-subtle)] hover:bg-[var(--bg-hover)] transition-colors">
+                    <td className="px-4 py-3 font-medium text-[var(--text-primary)]">{s.service}</td>
                     <td className="px-4 py-3 font-mono">{formatCurrency(s.cost)}</td>
-                    <td className="px-4 py-3 font-mono text-zinc-500">{formatCurrency(s.previous)}</td>
+                    <td className="px-4 py-3 font-mono text-[var(--text-muted)]">{formatCurrency(s.previous)}</td>
                     <td className="px-4 py-3">
-                      <span className={`text-sm font-medium ${s.change < 0 ? "text-green-500" : s.change > 0 ? "text-red-500" : "text-zinc-500"}`}>
+                      <span className={`text-sm font-medium ${s.change < 0 ? "text-green-500" : s.change > 0 ? "text-red-500" : "text-[var(--text-muted)]"}`}>
                         {s.change > 0 ? "+" : ""}{s.change}%
                       </span>
                     </td>

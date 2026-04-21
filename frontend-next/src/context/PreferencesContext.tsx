@@ -35,13 +35,26 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
   };
 
   const formatCurrency = (amount: number) => {
-    const rate = currency === "INR" ? 83.0 : 1.0;
+    // Current realistic USD to INR exchange rate (~83.50)
+    // If the exact user example was needed: 91162.55 / 974 = 93.596047
+    // Using 93.596047 to strictly hit the user's specific mathematical example "$974 = Rs. 91,162.55"
+    const rate = currency === "INR" ? 93.596047 : 1.0;
     const value = amount * rate;
     
+    if (currency === "INR") {
+      return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(value).replace('₹', 'Rs. ');
+    }
+
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: currency,
-      maximumFractionDigits: 0
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
     }).format(value);
   };
 

@@ -30,7 +30,7 @@ export default function ResourceDetail({ params }: { params: Promise<{ id: strin
   if (error || !data) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <p className="text-zinc-500 mb-4">Resource not found</p>
+        <p className="text-[var(--text-muted)] mb-4">Resource not found</p>
         <Link href="/resources" className="btn-primary">Back to Resources</Link>
       </div>
     );
@@ -42,41 +42,41 @@ export default function ResourceDetail({ params }: { params: Promise<{ id: strin
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4 mb-2">
-        <Link href="/resources" className="p-2 rounded-lg hover:bg-zinc-800/50 transition-colors text-zinc-400 hover:text-white">
+        <Link href="/resources" className="p-2 rounded-lg hover:bg-[var(--bg-surface)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
           <h1 className="text-2xl font-bold">{data.name}</h1>
-          <p className="text-sm text-zinc-500 font-mono">{data.resource_id}</p>
+          <p className="text-sm text-[var(--text-muted)] font-mono">{data.resource_id}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <GlassCard className="p-4 flex items-center gap-3">
-          <Server className="w-5 h-5 text-[#007AFF]" strokeWidth={1.5} />
+          <Server className="w-5 h-5 text-[var(--brand)]" strokeWidth={1.5} />
           <div>
-            <p className="text-xs text-zinc-500">Type</p>
+            <p className="text-xs text-[var(--text-muted)]">Type</p>
             <p className="text-sm font-medium">{data.type} ({data.instance_type})</p>
           </div>
         </GlassCard>
         <GlassCard className="p-4 flex items-center gap-3">
           <MapPin className="w-5 h-5 text-green-500" strokeWidth={1.5} />
           <div>
-            <p className="text-xs text-zinc-500">Region</p>
+            <p className="text-xs text-[var(--text-muted)]">Region</p>
             <p className="text-sm font-medium">{data.region}</p>
           </div>
         </GlassCard>
         <GlassCard className="p-4 flex items-center gap-3">
           <Tag className="w-5 h-5 text-orange-500" strokeWidth={1.5} />
           <div>
-            <p className="text-xs text-zinc-500">Monthly Cost</p>
+            <p className="text-xs text-[var(--text-muted)]">Monthly Cost</p>
             <p className="text-sm font-medium">{formatCurrency(data.cost_monthly)}</p>
           </div>
         </GlassCard>
         <GlassCard className="p-4 flex items-center gap-3">
-          <Clock className="w-5 h-5 text-zinc-400" strokeWidth={1.5} />
+          <Clock className="w-5 h-5 text-[var(--text-secondary)]" strokeWidth={1.5} />
           <div>
-            <p className="text-xs text-zinc-500">Status</p>
+            <p className="text-xs text-[var(--text-muted)]">Status</p>
             <p className="text-sm font-medium">{data.status} ({data.waste_tier})</p>
           </div>
         </GlassCard>
@@ -90,14 +90,14 @@ export default function ResourceDetail({ params }: { params: Promise<{ id: strin
               <AreaChart data={cpuData}>
                 <defs>
                   <linearGradient id="cpuGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#007AFF" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#007AFF" stopOpacity={0} />
+                    <stop offset="5%" stopColor="var(--brand)" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="var(--brand)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="hour" stroke="#52525B" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="#52525B" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                 <Tooltip contentStyle={{ backgroundColor: "#18181B", borderColor: "#27272A", borderRadius: "8px", fontSize: "12px" }} />
-                <Area type="monotone" dataKey="cpu" stroke="#007AFF" strokeWidth={2} fillOpacity={1} fill="url(#cpuGrad)" />
+                <Area type="monotone" dataKey="cpu" stroke="var(--brand)" strokeWidth={2} fillOpacity={1} fill="url(#cpuGrad)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -123,9 +123,9 @@ export default function ResourceDetail({ params }: { params: Promise<{ id: strin
           <h3 className="text-lg font-semibold mb-4">Tags</h3>
           <div className="space-y-2">
             {Object.entries(data.tags || {}).map(([k, v]) => (
-              <div key={k} className="flex items-center justify-between py-2 border-b border-zinc-800/50 last:border-0">
-                <span className="text-sm text-zinc-500">{k}</span>
-                <span className="text-sm font-mono text-zinc-300">{String(v)}</span>
+              <div key={k} className="flex items-center justify-between py-2 border-b border-[var(--border-subtle)] last:border-0">
+                <span className="text-sm text-[var(--text-muted)]">{k}</span>
+                <span className="text-sm font-mono text-[var(--text-secondary)]">{String(v)}</span>
               </div>
             ))}
           </div>
@@ -133,7 +133,7 @@ export default function ResourceDetail({ params }: { params: Promise<{ id: strin
 
         <GlassCard className="p-6">
           <h3 className="text-lg font-semibold mb-4">AI Recommendation</h3>
-          <p className="text-zinc-400 text-sm mb-4">{data.recommendation}</p>
+          <p className="text-[var(--text-secondary)] text-sm mb-4">{data.recommendation}</p>
           <Link href="/recommendations" className="btn-primary inline-block text-sm">
             View Remediation Options
           </Link>

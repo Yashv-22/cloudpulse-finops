@@ -37,23 +37,23 @@ export default function Login() {
 
   return (
     <div
-      className="min-h-screen bg-[#09090B] text-zinc-200 flex items-center justify-center p-4"
+      className="min-h-screen bg-[#09090B] text-[var(--text-primary)] flex items-center justify-center p-4"
       style={{
         backgroundImage: "url('https://images.unsplash.com/photo-1698156731209-b2fae65b5d24?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGRhcmslMjBncmFkaWVudCUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzc2Mjk2ODU4fDA&ixlib=rb-4.1.0&q=85')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-[var(--bg-base)]/80 backdrop-blur-sm" />
 
-      <GlassCard className="relative z-10 w-full max-w-md p-8 bg-zinc-900/80 backdrop-blur-2xl border-zinc-700/50">
+      <GlassCard className="relative z-10 w-full max-w-md p-8 bg-[var(--bg-panel)] backdrop-blur-2xl border-[var(--border-subtle)]">
         <div className="flex items-center justify-center gap-2 mb-8">
-          <Shield className="w-8 h-8 text-[#007AFF]" strokeWidth={1.5} />
+          <Shield className="w-8 h-8 text-[var(--brand)]" strokeWidth={1.5} />
           <span className="text-2xl font-bold glow-text">CloudPulse</span>
         </div>
 
         <h2 className="text-2xl font-bold text-center mb-1">Welcome Back</h2>
-        <p className="text-center text-zinc-500 text-sm mb-6">Sign in to your CloudPulse account</p>
+        <p className="text-center text-[var(--text-muted)] text-sm mb-6">Sign in to your CloudPulse account</p>
 
         {error && (
           <div className="mb-4 p-3 rounded-lg bg-red-950/50 border border-red-500/30 text-red-400 text-sm">
@@ -63,7 +63,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="text-sm text-zinc-400 mb-1 block">Email</label>
+            <label className="text-sm text-[var(--text-secondary)] mb-1 block">Email</label>
             <input
               type="email"
               value={email}
@@ -75,8 +75,8 @@ export default function Login() {
           </div>
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="text-sm text-zinc-400">Password</label>
-              <Link href="/forgot-password" className="text-xs text-[#007AFF] hover:text-blue-300 transition-colors">
+              <label className="text-sm text-[var(--text-secondary)]">Password</label>
+              <Link href="/forgot-password" className="text-xs text-[var(--brand)] hover:text-[var(--brand-hover)] transition-colors">
                 Forgot password?
               </Link>
             </div>
@@ -100,14 +100,14 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-zinc-500 mt-6">
+        <p className="text-center text-sm text-[var(--text-muted)] mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-[#007AFF] hover:text-blue-300 transition-colors">
+          <Link href="/signup" className="text-[var(--brand)] hover:text-[var(--brand-hover)] transition-colors">
             Sign up
           </Link>
         </p>
 
-        <p className="text-center text-xs text-zinc-600 mt-4">
+        <p className="text-center text-xs text-[var(--text-muted)] mt-4">
           Demo: admin@cloudpulse.com / admin
         </p>
       </GlassCard>

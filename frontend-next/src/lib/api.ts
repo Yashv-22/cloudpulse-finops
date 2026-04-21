@@ -27,6 +27,9 @@ export const api = {
   forgotPassword: (email: string) =>
     request<{ message: string }>("/auth/forgot-password", { method: "POST", body: JSON.stringify({ email }) }),
 
+  changePassword: (current_password: string, new_password: string) =>
+    request<{ message: string }>("/auth/change-password", { method: "POST", body: JSON.stringify({ current_password, new_password }) }),
+
   getMe: () => request<{ email: string; first_name: string; last_name: string; role: string; company: string; joined: string }>("/auth/me"),
 
   // Dashboard

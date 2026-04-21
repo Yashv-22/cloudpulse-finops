@@ -26,18 +26,24 @@ export function Navbar() {
   }, [setUnreadCount]);
 
   useEffect(() => {
-    if (!query.trim()) {
+    const trimmed = query.trim();
+    if (!trimmed) {
       setSearchResults([]);
       setSearchOpen(false);
       return;
     }
+    let cancelled = false;
     const timer = setTimeout(() => {
-      api.globalSearch(query).then((res) => {
+      api.globalSearch(trimmed).then((res) => {
+        if (cancelled) return;
         setSearchResults(res.results);
         setSearchOpen(true);
       }).catch(() => {});
     }, 250);
-    return () => clearTimeout(timer);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [query]);
 
   useEffect(() => {
@@ -142,7 +148,7 @@ export function Navbar() {
                   {unreadCount > 0 && (
                     <button
                       onClick={handleMarkAllRead}
-                      className="text-xs text-[#007AFF] hover:text-blue-300 transition-colors"
+                      className="text-xs text-[var(--brand)] hover:text-[var(--brand-hover)] transition-colors"
                     >
                       Mark all read
                     </button>
@@ -179,7 +185,7 @@ export function Navbar() {
               <Link
                 href="/notifications"
                 onClick={() => setNotifOpen(false)}
-                className="block text-center py-3 text-xs text-[#007AFF] hover:text-blue-300 border-t border-[var(--border-subtle)] transition-colors"
+                className="block text-center py-3 text-xs text-[var(--brand)] hover:text-[var(--brand-hover)] border-t border-[var(--border-subtle)] transition-colors"
               >
                 View all notifications
               </Link>

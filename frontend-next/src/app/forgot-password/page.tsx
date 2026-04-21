@@ -32,18 +32,18 @@ export default function ForgotPassword() {
 
   return (
     <div
-      className="min-h-screen bg-[#09090B] text-zinc-200 flex items-center justify-center p-4"
+      className="min-h-screen bg-[#09090B] text-[var(--text-primary)] flex items-center justify-center p-4"
       style={{
         backgroundImage: "url('https://images.unsplash.com/photo-1698156731209-b2fae65b5d24?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGRhcmslMjBncmFkaWVudCUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzc2Mjk2ODU4fDA&ixlib=rb-4.1.0&q=85')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-[var(--bg-base)]/80 backdrop-blur-sm" />
 
-      <GlassCard className="relative z-10 w-full max-w-md p-8 bg-zinc-900/80 backdrop-blur-2xl border-zinc-700/50">
+      <GlassCard className="relative z-10 w-full max-w-md p-8 bg-[var(--bg-panel)] backdrop-blur-2xl border-[var(--border-subtle)]">
         <div className="flex items-center justify-center gap-2 mb-8">
-          <Shield className="w-8 h-8 text-[#007AFF]" strokeWidth={1.5} />
+          <Shield className="w-8 h-8 text-[var(--brand)]" strokeWidth={1.5} />
           <span className="text-2xl font-bold glow-text">CloudPulse</span>
         </div>
 
@@ -51,8 +51,8 @@ export default function ForgotPassword() {
           <div className="text-center py-4">
             <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">Check Your Email</h2>
-            <p className="text-zinc-500 text-sm mb-6">
-              If an account exists for <span className="text-zinc-300">{email}</span>, we&apos;ve sent a password reset link.
+            <p className="text-[var(--text-muted)] text-sm mb-6">
+              If an account exists for <span className="text-[var(--text-secondary)]">{email}</span>, we&apos;ve sent a password reset link.
             </p>
             <Link href="/login" className="btn-primary inline-block text-sm">
               Back to Sign In
@@ -61,7 +61,7 @@ export default function ForgotPassword() {
         ) : (
           <>
             <h2 className="text-2xl font-bold text-center mb-1">Reset Password</h2>
-            <p className="text-center text-zinc-500 text-sm mb-6">Enter your email to receive a reset link</p>
+            <p className="text-center text-[var(--text-muted)] text-sm mb-6">Enter your email to receive a reset link</p>
 
             {error && (
               <div className="mb-4 p-3 rounded-lg bg-red-950/50 border border-red-500/30 text-red-400 text-sm">
@@ -71,7 +71,7 @@ export default function ForgotPassword() {
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
-                <label className="text-sm text-zinc-400 mb-1 block">Work Email</label>
+                <label className="text-sm text-[var(--text-secondary)] mb-1 block">Work Email</label>
                 <input
                   type="email"
                   value={email}
@@ -92,9 +92,9 @@ export default function ForgotPassword() {
               </button>
             </form>
 
-            <p className="text-center text-sm text-zinc-500 mt-6">
+            <p className="text-center text-sm text-[var(--text-muted)] mt-6">
               Remember your password?{" "}
-              <Link href="/login" className="text-[#007AFF] hover:text-blue-300 transition-colors">Sign in</Link>
+              <Link href="/login" className="text-[var(--brand)] hover:text-[var(--brand-hover)] transition-colors">Sign in</Link>
             </p>
           </>
         )}

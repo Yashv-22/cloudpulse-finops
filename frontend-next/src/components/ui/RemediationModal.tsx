@@ -63,7 +63,7 @@ export function RemediationModal({ isOpen, onClose, issue, resourceId }: Remedia
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--bg-base)]/80 backdrop-blur-sm p-4">
       <GlassCard className="w-full max-w-2xl bg-[var(--bg-elevated)] border-[var(--border-strong)] shadow-2xl overflow-hidden">
         <div className="flex justify-between items-center p-6 border-b border-[var(--border-subtle)]">
           <div>
@@ -87,7 +87,7 @@ export function RemediationModal({ isOpen, onClose, issue, resourceId }: Remedia
 
           {loading && (
             <div className="text-center py-12">
-              <Loader2 className="w-8 h-8 text-[#007AFF] animate-spin mx-auto mb-4" />
+              <Loader2 className="w-8 h-8 text-[var(--brand)] animate-spin mx-auto mb-4" />
               <p className="theme-text-secondary">Generating remediation plan...</p>
             </div>
           )}

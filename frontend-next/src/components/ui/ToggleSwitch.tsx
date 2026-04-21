@@ -21,8 +21,8 @@ export function ToggleSwitch({ initialState = false, onChange }: ToggleSwitchPro
     <button
       type="button"
       className={cn(
-        "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30",
-        enabled ? "bg-[#007AFF]" : "bg-[var(--border-strong)]"
+        "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[var(--brand-muted)]",
+        enabled ? "bg-[var(--brand)]" : "bg-[var(--border-strong)]"
       )}
       onClick={toggle}
       data-testid="toggle-switch"

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Bell, CheckCheck, AlertTriangle, CheckCircle, Info, ShieldAlert } from "lucide-react";
@@ -32,7 +31,7 @@ export default function NotificationsPage() {
       case "critical": return <ShieldAlert className="w-5 h-5 text-red-500" />;
       case "warning": return <AlertTriangle className="w-5 h-5 text-orange-500" />;
       case "success": return <CheckCircle className="w-5 h-5 text-green-500" />;
-      default: return <Info className="w-5 h-5 text-[#007AFF]" />;
+      default: return <Info className="w-5 h-5 text-[var(--brand)]" />;
     }
   };
 
@@ -41,7 +40,7 @@ export default function NotificationsPage() {
       <header className="flex justify-between items-end mb-2">
         <div>
           <h1 className="text-3xl font-bold mb-1">Notifications</h1>
-          <p className="text-zinc-500">Stay on top of alerts, anomalies, and system events.</p>
+          <p className="text-[var(--text-muted)]">Stay on top of alerts, anomalies, and system events.</p>
         </div>
         {data && data.unread_count > 0 && (
           <button onClick={handleMarkAll} className="btn-secondary text-sm flex items-center gap-2">
@@ -59,26 +58,26 @@ export default function NotificationsPage() {
           {(data?.notifications || []).map((n) => (
             <GlassCard
               key={n.id}
-              className={`p-5 flex items-start gap-4 cursor-pointer hover:border-zinc-700 transition-all ${!n.read ? "border-l-2 border-l-[#007AFF]" : ""}`}
+              className={`p-5 flex items-start gap-4 cursor-pointer hover:border-[var(--border-strong)] transition-all ${!n.read ? "border-l-2 border-l-[var(--brand)]" : ""}`}
               onClick={() => !n.read && handleMarkOne(n.id)}
             >
               <div className="mt-0.5 shrink-0">{typeIcon(n.type)}</div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-4">
-                  <p className={`text-sm ${!n.read ? "font-semibold text-white" : "text-zinc-400"}`}>
+                  <p className={`text-sm ${!n.read ? "font-semibold text-[var(--text-primary)]" : "text-[var(--text-secondary)]"}`}>
                     {n.title}
                   </p>
-                  <span className="text-xs text-zinc-600 whitespace-nowrap shrink-0">
+                  <span className="text-xs text-[var(--text-muted)] whitespace-nowrap shrink-0">
                     {new Date(n.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                   </span>
                 </div>
-                <p className="text-xs text-zinc-500 mt-1">{n.message}</p>
+                <p className="text-xs text-[var(--text-muted)] mt-1">{n.message}</p>
               </div>
-              {!n.read && <div className="w-2 h-2 rounded-full bg-[#007AFF] mt-2 shrink-0" />}
+              {!n.read && <div className="w-2 h-2 rounded-full bg-[var(--brand)] mt-2 shrink-0" />}
             </GlassCard>
           ))}
           {(data?.notifications || []).length === 0 && (
-            <div className="text-center py-16 text-zinc-600">
+            <div className="text-center py-16 text-[var(--text-muted)]">
               <Bell className="w-10 h-10 mx-auto mb-4 opacity-30" />
               <p>No notifications yet.</p>
             </div>
